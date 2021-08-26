@@ -1,7 +1,9 @@
 <!-- SPDX-License-Identifier: zlib-acknowledgement -->
 
 # CAD (Coding, Algorithms and Data Structures)
-> ![GitHub](https://img.shields.io/github/license/ryan-mcclue/cad)
+> ![Github](https://img.shields.io/github/license/ryan-mcclue/cad)
+[![CircleCI](https://circleci.com/gh/ryan-mcclue/cad.svg?style=svg)](https://circleci.com/gh/ryan-mcclue/cad)
+
 Solutions to a variety of contrived programming problems. 
 
 ## Skills Developed

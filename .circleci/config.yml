@@ -1,16 +1,13 @@
 # SPDX-License-Identifier: zlib-acknowledgement
 
+version: 2.1
+
 orbs:
   python: circleci/python@1.4.0
 
-version: 2.1
 jobs:
-  cad: 
+  lint-and-test:
     executor: python/default
-    filters:
-      branches:
-        only:
-          - master
     steps:
       - checkout
       - python/load-cache
@@ -25,3 +22,8 @@ jobs:
           command: |
             coverage run --branch -m pytest tests/ 
             coverage report --show-missing --fail-under 100
+
+workflows:
+  cad:
+    jobs:
+      - lint-and-test
