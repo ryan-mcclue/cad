@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: zlib-acknowledgement
+
+*
+!*/
+
+!.gitignore
+!README.md
+!LICENSE
+
+!.circleci/config.yml
+
+!code/**/*.py
+!tests/**/*.py
+!misc/**/*
+
+!requirements.txt

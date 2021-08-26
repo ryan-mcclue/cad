@@ -1,0 +1,4 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement
+
+find src/ -type f -iname "*.py" | xargs -I{} python3 {}

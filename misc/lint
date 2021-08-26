@@ -1,0 +1,3 @@
+#!/bin/sh
+# SPDX-License-Identifier: zlib-acknowledgement
+pylint --rcfile='.pylintrc' -- **/*.py

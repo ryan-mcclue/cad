@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: zlib-acknowledgement
+
+orbs:
+  python: circleci/python@1.4.0
+
+version: 2.1
+jobs:
+  cad: 
+    executor: python/default
+    filters:
+      branches:
+        only:
+          - master
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          name: Linting
+          command: |
+            pylint --rcfile='misc/.pylintrc' -- **/*.py
+      - run:
+          name: Testing
+          command: |
+            coverage run --branch -m pytest tests/ 
+            coverage report --show-missing --fail-under 100
