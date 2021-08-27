@@ -2,17 +2,16 @@
 
 version: 2.1
 
-orbs:
-  python: circleci/python@1.4.0
-
 jobs:
   lint-and-test:
-    executor: python/default
+    docker:
+      - image: python
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
+      - run:
+          name: Dependencies
+          command: |
+            pip3 install -r misc/requirements.txt
       - run:
           name: Linting
           command: |

@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: zlib-acknowledgement
 
-import pytest
-
-import src.valid_bst as valid_bst
+import code.valid_bst as valid_bst
 
 def test_example():
   root = valid_bst.Node(10)

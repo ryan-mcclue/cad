@@ -14,7 +14,7 @@ Solutions to a variety of contrived programming problems.
 
 ## Executables
 ```
-pip3 install -r requirements.txt
+pip3 install -r misc/requirements.txt
 
 sh misc/lint
 sh misc/run-tests

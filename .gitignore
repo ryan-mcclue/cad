@@ -12,5 +12,3 @@
 !code/**/*.py
 !tests/**/*.py
 !misc/**/*
-
-!requirements.txt
