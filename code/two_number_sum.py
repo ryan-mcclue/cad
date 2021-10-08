@@ -11,7 +11,7 @@ def solution_quadratic(distinct_arr, target_sum):
   return ()
 
 def solution_linear(distinct_arr, target_sum):
-  hashmap_arr = {} 
+  hashmap_arr = {}
   for (index, value) in enumerate(distinct_arr):
     hashmap_arr[str(value)] = index
 
