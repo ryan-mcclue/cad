@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: zlib-acknowledgement
 error_file=$(mktemp)
 
-coverage run --source "$PWD" --branch -m pytest tests/ >"$error_file" 2>&1
+python3 -m coverage run --source "$PWD" --branch -m pytest tests/ >"$error_file" 2>&1
 if test $? -eq 0; then
-  coverage report --show-missing --fail-under 100
+  python3 -m coverage report --show-missing --fail-under 100
 else
   cat "$error_file"
 fi
