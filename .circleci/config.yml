@@ -1,5 +1,9 @@
 # SPDX-License-Identifier: zlib-acknowledgement
 
+# NOTE(Ryan): Verify locally:
+# $(circleci config validate)
+# $(circleci local execute)
+
 version: 2.1
 
 jobs:
