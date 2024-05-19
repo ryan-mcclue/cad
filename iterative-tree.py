@@ -35,30 +35,6 @@ def generate_tree(level=4, counter=[0]):
     n.r = generate_tree(level - 1)
     return n
 
-def generate_tree(level=4, counter=[0]):
-  if level == 0:
-    return None
-  else:
-    # preorder
-    n = Node(level)
-    n.v = counter[0]
-    counter[0] += 1
-    n.l = generate_tree(level - 1)
-    n.r = generate_tree(level - 1)
-    return n
-
-def generate_tree_iterative(level):
-#  current = r
-#  while current != None or len(stack) == 0:
-#    push(current)
-#    current = current.l
-#    if current != None:
-#      continue
-#    current = pop()
-#    print(current)
-#    current = current.right
-  return r
-
 # inorder
 def dump_node(n, level, indent_str, out):
   if n is not None:
@@ -67,6 +43,26 @@ def dump_node(n, level, indent_str, out):
       out.append(indent_str)
     out.append(f"{n.v}\n")
     dump_node(n.r, level+1, indent_str, out)
+
+# bfs
+def generate_tree_iterative(max_depth):
+  c = 0
+  num_nodes = 2 ** max_depth - 1
+  nodes = []
+  for i in range(num_nodes):
+    n = Node()
+    n.v = c
+    c += 1
+    nodes.append(n)
+
+  for i in range(num_nodes):
+    li = 2 * i + 1
+    if li > num_nodes - 2: 
+      break
+    nodes[i].l = nodes[li]
+    nodes[i].r = nodes[2 * i + 2]
+
+  return nodes[0]
 
 #def preorder(r):
 #  if r == None:
@@ -77,21 +73,20 @@ def dump_node(n, level, indent_str, out):
 #    print(n.v)
 #    push(n.r) # as want reverse
 #    push(n.l)
-#
-## just store preorder in another stack and empty that to reverse it
-#def postorder(r):
-#  pass
-#
-#def inorder(r):
+
+#def inorder():
 #  current = r
-#  while current != None or len(stack) == 0:
-#    push(current)
-#    current = current.l
-#    if current != None:
-#      continue
+#  while current != None or len(stack) != 0:
+#    while current != None:
+#      push(current)
+#      current = current.l
 #    current = pop()
 #    print(current)
 #    current = current.right
+
+## just store preorder in another stack and empty that to reverse it
+#def postorder(r):
+#  pass
 
 def create_inverted_tree(n):
   if n == None:
@@ -105,6 +100,7 @@ def create_inverted_tree(n):
 
 def main():
   r = None
+
   with Timer("gen_tree"):
     r = generate_tree(3)
 
@@ -113,7 +109,7 @@ def main():
   s = "".join(out)
   print(s)
 
-  a = generate_tree_iterative(3)
+  a = gen_tree_preoder_it(3)
   out = []
   dump_node(a, 0, "  ", out)
   s = "".join(out)
