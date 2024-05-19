@@ -23,32 +23,107 @@ class Timer:
     end = time.time_ns()
     print(f"{self.name}: {end - self.start}")
 
-def generate_tree(level=3):
+def generate_tree(level=4, counter=[0]):
   if level == 0:
     return None
   else:
     # preorder
     n = Node(level)
+    n.v = counter[0]
+    counter[0] += 1
     n.l = generate_tree(level - 1)
     n.r = generate_tree(level - 1)
     return n
 
+def generate_tree(level=4, counter=[0]):
+  if level == 0:
+    return None
+  else:
+    # preorder
+    n = Node(level)
+    n.v = counter[0]
+    counter[0] += 1
+    n.l = generate_tree(level - 1)
+    n.r = generate_tree(level - 1)
+    return n
+
+def generate_tree_iterative(level):
+#  current = r
+#  while current != None or len(stack) == 0:
+#    push(current)
+#    current = current.l
+#    if current != None:
+#      continue
+#    current = pop()
+#    print(current)
+#    current = current.right
+  return r
+
 # inorder
-def print_tree(n, indent=0, indent_str="  "):
+def dump_node(n, level, indent_str, out):
   if n is not None:
-    print_tree(n.l, indent + 1)
-    for i in range(indent):
-      print(indent_str, end="")
-    print(f"{n.v}")
-    print_tree(n.r, indent + 1)
-    
+    dump_node(n.l, level+1, indent_str, out)
+    for i in range(level):
+      out.append(indent_str)
+    out.append(f"{n.v}\n")
+    dump_node(n.r, level+1, indent_str, out)
+
+#def preorder(r):
+#  if r == None:
+#    return
+#  push(r)
+#  while len(stack) != 0:
+#    n = stack.pop()
+#    print(n.v)
+#    push(n.r) # as want reverse
+#    push(n.l)
+#
+## just store preorder in another stack and empty that to reverse it
+#def postorder(r):
+#  pass
+#
+#def inorder(r):
+#  current = r
+#  while current != None or len(stack) == 0:
+#    push(current)
+#    current = current.l
+#    if current != None:
+#      continue
+#    current = pop()
+#    print(current)
+#    current = current.right
+
+def create_inverted_tree(n):
+  if n == None:
+    return None
+  else:
+    nn = Node()
+    nn.v = n.v
+    nn.l = create_inverted_tree(n.r)
+    nn.r = create_inverted_tree(n.l)
+    return nn
 
 def main():
   r = None
   with Timer("gen_tree"):
-    r = generate_tree()
+    r = generate_tree(3)
 
-  print_tree(r)
+  out = []
+  dump_node(r, 0, "  ", out)
+  s = "".join(out)
+  print(s)
+
+  a = generate_tree_iterative(3)
+  out = []
+  dump_node(a, 0, "  ", out)
+  s = "".join(out)
+  print(s)
+
+  #i = create_inverted_tree(r)
+  #out = []
+  #dump_node(i, 0, "  ", out)
+  #s = "".join(out)
+  #print(s)
 
   return
 
