@@ -12,3 +12,4 @@ def c():
     b_start += b_pitch
 
   # b[y_i][x_i] = a[y_i][x_i]
+  # optimise by writing more than one byte at a time
