@@ -13,7 +13,7 @@ def f(p, c):
          (p >> 4 & 3 == c) |
          (p >> 6 & 3 == c);
 
-  # binary logic puzzle?
-  # bit level puzzles in hackers delight
   # XOR is !=, so XOR NOT is ==, ~(val ^ replicated)
-
+  any_two = 0b10110101 
+  top1_set = any_two & 0b10101010
+  any_two_set = any_two & (top1_set >> 1)
