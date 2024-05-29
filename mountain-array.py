@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: zlib-acknowledgement
 
+# Could do a state machine
+
 def m(a):
   if len(a) < 3:
     return False
