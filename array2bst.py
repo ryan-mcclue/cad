@@ -30,3 +30,6 @@ def arr2bst(a):
 #   elif half0[half0_i] < half1[half1_i]:
 #     out.append(half0[half0_i])
 #     half0_i += 1
+#  COPYBACK REQUIRED:
+#for i in range(count):
+#  orig[i] = temp[i]
