@@ -19,10 +19,21 @@ def s(courses):
       return False
   return True
 
-def has_cycle(graph, course_num, seen):
+# dfs for graph, seen for cycles, cache for multiple parents
+def has_cycle(graph, course_num, seen, cache):
+  if course_num in cache:
+    return cache[course_num]
+
   if course_num in seen:
     return True
+
   seen.add(course_num)
-  for neighbours in graph[course_num]:
-    if has_cycle()
+  ret = False
+  for neighbour in graph[course_num]:
+    if has_cycle(graph, neighbour, seen, cache):
+      ret = True
+      break
   seen.remove(course_num)
+
+  cache[course_num] = ret
+  return ret
