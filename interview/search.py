@@ -1,9 +1,31 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: zlib-acknowledgement
 
-# recursive divide and conquer on an array
-# (in C, would pass in count)
-def arr2bst(a):
+# space complexity for recursive is recursion depth
+def bin_search(a, v, find_first):
+  low = 0
+  high = len(a) - 1
+  while True:
+    mid = (low + (high - low)) // 2
+    if high < low:
+      return -1
+    if find_first:
+      if a[mid] == v and (mid == 0 or a[mid-1] < v):
+        return mid
+      elif a[mid] < v:
+        low = mid + 1
+      else:
+        high = mid - 1
+    else:
+      if a[mid] == v and (mid == len(a) - 1 or a[mid+1] > v):
+        return mid
+      elif a[mid] > v:
+        high = mid - 1
+      else:
+        low = mid + 1
+
+
+def arr2bst(a, temp):
   a_len = len(a)
   if a_len == 0:
     return None
@@ -20,6 +42,9 @@ def arr2bst(a):
       n.left = arr2bst(half0)
       n.right = arr2bst(half1)
     return n
+
+def search_bst():
+  pass
 
 # half0_i = 0
 # half1_i = 0

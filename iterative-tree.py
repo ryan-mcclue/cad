@@ -64,6 +64,28 @@ def generate_tree_iterative(max_depth):
 
   return nodes[0]
 
+from queue import Queue
+
+def bfs(n):
+  nodes = Queue()
+  nodes.put(n)
+
+  while not nodes.empty():
+    n = nodes.get() 
+    if (n == None):
+      continue
+    print(n.v)
+    nodes.put(n.l)
+    nodes.put(n.r)
+
+r = generate_tree_iterative(4)
+bfs(r)
+
+s = []
+dump_node(r, 0, " ", s)
+print("".join(s))
+
+
 #def preorder(r):
 #  if r == None:
 #    return
@@ -99,27 +121,27 @@ def create_inverted_tree(n):
     return nn
 
 def main():
-  r = None
-
-  with Timer("gen_tree"):
-    r = generate_tree(3)
-
-  out = []
-  dump_node(r, 0, "  ", out)
-  s = "".join(out)
-  print(s)
-
-  a = gen_tree_preoder_it(3)
-  out = []
-  dump_node(a, 0, "  ", out)
-  s = "".join(out)
-  print(s)
-
-  #i = create_inverted_tree(r)
-  #out = []
-  #dump_node(i, 0, "  ", out)
-  #s = "".join(out)
-  #print(s)
+#  r = None
+#
+#  with Timer("gen_tree"):
+#    r = generate_tree(3)
+#
+#  out = []
+#  dump_node(r, 0, "  ", out)
+#  s = "".join(out)
+#  print(s)
+#
+#  a = gen_tree_preoder_it(3)
+#  out = []
+#  dump_node(a, 0, "  ", out)
+#  s = "".join(out)
+#  print(s)
+#
+#  #i = create_inverted_tree(r)
+#  #out = []
+#  #dump_node(i, 0, "  ", out)
+#  #s = "".join(out)
+#  #print(s)
 
   return
 

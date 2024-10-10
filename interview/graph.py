@@ -1,86 +1,73 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: zlib-acknowledgement
 
-class Node:
-    def __init__(self, unit):
-        self.unit = unit
-        self.connections = {}  # {connected_node: conversion_factor}
+# TODO: has_cycle function
 
-    def add_connection(self, other_node, factor):
-        self.connections[other_node] = factor
-        other_node.connections[self] = 1 / factor
+GRAPH_DIM = 16
+graph = [[0] * GRAPH_DIM] * GRAPH_DIM
 
-class ConversionGraph:
-    def __init__(self):
-        self.nodes = {}
+units = {}
+def unit_to_graph_i(unit):
+  if unit in units:
+    return units[unit]
+  else
+    units[unit] = len(units)
 
-    def add_unit(self, unit):
-        if unit not in self.nodes:
-            self.nodes[unit] = Node(unit)
+def parse_island_array(a):
+  for y in range(len(a)):
+    for x in range(len(a[0])):
+      # ignore cycles
+      if y == x:
+        continue
 
-    def add_conversion(self, from_unit, to_unit, factor):
-        self.add_unit(from_unit)
-        self.add_unit(to_unit)
-        self.nodes[from_unit].add_connection(self.nodes[to_unit], factor)
+      if a[y][x] == 1:
+        # check left neighbour
+        if a[y][x-1] == 1:
+          graph[y][x-1] = 1
+          graph[x-1][y - 1] = 1
+        # check right neighbour
+        if a[y][x+1] == 1:
+          graph[y][x+1] = 1
+          graph[x+1][y - 1] = 1
+def set_connection(x, y):
+  # mark as border
+  if x == 0:
+    graph[y][x] = -1
 
-    def find_conversion_path(self, from_unit, to_unit):
-        start = self.nodes[from_unit]
-        end = self.nodes[to_unit]
-        
-        queue = [(start, [start], 1)]
-        visited = set()
+def find_islands():
+  if graph[y][x] == 0:
 
-        while queue:
-            (node, path, factor) = queue.pop(0)
-            if node not in visited:
-                visited.add(node)
-                
-                if node == end:
-                    return path, factor
-                
-                for next_node, edge_factor in node.connections.items():
-                    if next_node not in visited:
-                        new_path = path + [next_node]
-                        new_factor = factor * edge_factor
-                        queue.append((next_node, new_path, new_factor))
-        
-        return None, None
 
-    def convert(self, value, from_unit, to_unit):
-        if from_unit == to_unit:
-            return value
 
-        path, factor = self.find_conversion_path(from_unit, to_unit)
-        if path is None:
-            return "not convertible"
-
-        return round(value * factor, 3)
-
-def parse_input(query):
-    parts = query.split('=')
-    left = parts[0].strip().split()
-    right = parts[1].strip().split()
+def parse_facts(facts):
+  for f in facts:
+    src_amt, src_unit, dst_amt, dst_unit = f
     
-    value = float(left[0])
-    from_unit = left[1]
-    to_unit = right[1]
-    
-    return value, from_unit, to_unit
+    src_i = unit_to_graph_i(src_unit)
+    dst_i = unit_to_graph_i(dst_unit)
 
-# Create and populate the conversion graph
-graph = ConversionGraph()
-graph.add_conversion('m', 'ft', 3.28084)
-graph.add_conversion('ft', 'in', 12)
-graph.add_conversion('hr', 'min', 60)
-graph.add_conversion('min', 'sec', 60)
+    graph[src_i][dst_i] = src_amt / dst_amt
+    graph[dst_i][src_i] = dst_amt / src_amt
 
-# Main program
-while True:
-    query = input("Enter conversion query (or 'q' to quit): ")
-    if query.lower() == 'q':
-        break
-    
-    try:
-        value, from_unit, to_unit = parse_input(query)
-        result = graph.convert(value, from_unit, to_unit)
-        print(f"Result: {result}")
-    except Exception as e:
-        print(f"Error: {e}")
+def convert(query):
+  amt, unit, to_unit = query
+  assert unit in units, "unit not in knowledge base" 
+  assert to_unit in units, "to_unit not in knowledge base" 
+
+  start_i = unit_to_graph_i(unit)
+  end_i = unit_to_graph_i(to_unit)
+  visited[start_i] = True
+  conversion = []
+  dfs(start_i, conversion)
+
+def dfs(start_i, conversion):
+  if start_i == end_i:
+    return
+
+  for i in range(len(GRAPH_DIM)):
+    conversion = graph[start_i][i]
+    if conversion != 0 and not visited[i]:
+      conversion[0] *= conversion
+      visited[i] = True
+      dfs(i, conversion)
+      visited[i] = False
