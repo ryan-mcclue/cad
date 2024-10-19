@@ -1,5 +1,24 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: zlib-acknowledgement
+def duplicate(nums):
+  d = []
+  # we are mutating array to negative to indicate it has been seen
+  for n in nums:
+    v = abs(n)
+    if nums[v] < 0:
+      d.append(n)
+    else:
+      nums[v] = nums[v] * -1
+  return d
+
+def packed_search(colors_lane, search):
+  assert search < 0x4, "search only 2bit color"
+  search_dup = search | (search << 2) | (search << 4) | (search << 6)
+
+  eq_straddle = ~(colors_lane ^ search) 
+  straddle_mask = 0b10101010
+  eq = eq & ((eq_straddle & straddle_mask) >> 1)
+  return eq
 
 # space complexity for recursive is recursion depth
 def bin_search(a, v, find_first):
